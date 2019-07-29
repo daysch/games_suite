@@ -3,7 +3,8 @@ Only tested in linux. Screen clear method may not work in windows. But that's wh
 
 To play a game, navigate in a fresh terminal window to the finalproject folder. Type in `python games.py` notice the error message.
 You need to choose which game to play! You can do this by typing either `hangman` or `minesweeper` after games.py.
-Basic gameplay is thus `python games.py hangman` or `python games.py minesweeper`
+Basic gameplay is thus `python games.py hangman` or `python games.py minesweeper`.
+You may also play the game directly via `python hangman.py` or `python minesweeper.py`.
 
 
 Minesweeper:
