@@ -3,7 +3,6 @@
 # libraries to import
 from cs50 import get_string
 from cs50 import get_float
-from cs50 import get_char
 import os
 import sys
 import time
@@ -18,7 +17,7 @@ MAX_MISTAKES = 7
 DEFAULT_DICTIONARY = "dictionary"
 
 
-def hangman():
+def hangman(sysArgs):
     # suppress traceback
     sys.tracebacklimit = 0
 
@@ -27,8 +26,8 @@ def hangman():
     print("\12")
 
     # check for user-inputted dictionary
-    if len(sys.argv) == 3:
-        chosen_dictionary = sys.argv[2]
+    if len(sysArgs) == 2:
+        chosen_dictionary = sys.argv[1]
     else:
         chosen_dictionary = DEFAULT_DICTIONARY
 
@@ -62,7 +61,7 @@ def hangman():
             time.sleep(1)
             webbrowser.open("http://www.easteregg.com/", new=2)
             if helpers.play_again():
-                return hangman()
+                return hangman(sysArgs)
             else:
                 return
 
@@ -124,7 +123,7 @@ def hangman():
                 print("--- %s seconds ---" % (time.time() - start_time))
                 # ask user to play again
                 if helpers.play_again():
-                    return hangman()
+                    return hangman(sysArgs)
                 else:
                     return
 
@@ -155,7 +154,7 @@ def hangman():
                 print("--- %s seconds ---" % (time.time() - start_time))
                 # ask user to play again
                 if helpers.play_again():
-                    return hangman()
+                    return hangman(sysArgs)
                 else:
                     return
 
@@ -172,7 +171,7 @@ def hangman():
 
     # ask user to play again
     if helpers.play_again():
-        return hangman()
+        return hangman(sysArgs)
     else:
         return
 
@@ -215,6 +214,5 @@ def decide_word(dictionary):
         if word.isalpha() and word.islower():
             return word
 
-
 if __name__ == "__main__":
-    hangman()
+    hangman(sys.argv)

@@ -27,7 +27,7 @@ class square:
         self.flag = False
 
 
-def minesweeper():
+def minesweeper(sysArgs):
     # suppress traceback
     sys.tracebacklimit = 0
 
@@ -37,17 +37,17 @@ def minesweeper():
 
     # determine size and number of flags
     # user inputted
-    if len(sys.argv) == 4:
+    if len(sysArgs) == 3:
         try:
             # check validity of size
-            size = int(sys.argv[2])
+            size = int(sysArgs[1])
             if not 0 < size <= SIZE_MAX:
                 print(colored("size of screen must be from 1 to 60", "red"))
                 return
             # check validity of bombs
-            bombs = int(sys.argv[3])
+            bombs = int(sysArgs[2])
             if not 0 < bombs <= size * size:
-                print(colored("number of bombs must be greater than 1 and cannot exceed number of squares", "red"))
+                print(colored("number of bombs must be greater than 0 and cannot exceed number of squares", "red"))
                 return
         except:
             print("usage: games.py hangman [size bombs]")
@@ -196,7 +196,7 @@ def minesweeper():
                 print(colored("WINNER!", "green"))
                 print("--- %s seconds ---" % (time.time() - start_time))
                 if helpers.play_again():
-                    return minesweeper()
+                    return minesweeper(sysArgs)
                 else:
                     return
 
@@ -218,7 +218,7 @@ def minesweeper():
             print()
             print(colored("LOSER", "red"))
             if helpers.play_again():
-                return minesweeper()
+                return minesweeper(sysArgs)
             else:
                 return
 
@@ -234,8 +234,9 @@ def reveal(rows, row, column, size):
     if rows[row][column].revealed:
         return False
 
-    # reveal square
-    rows[row][column].revealed = True
+    # reveal square, (unless there's a flag on it – relevant when auto-showing next to 0s)
+    if not rows[row][column].flag:
+        rows[row][column].revealed = True
 
     # decide whether squares nearby need to be revealed
     if rows[row][column].nearby != 0:
@@ -336,6 +337,5 @@ def print_screen(rows, size, lost, flags_guessed, bombs):
                 print("?", end="  ")
         print()
 
-
 if __name__ == "__main__":
-    minesweeper()
+    minesweeper(sys.argv)
